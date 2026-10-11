@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="robots" content="noindex" />
+    <title>Fortis AI - retorno do Mercado Livre</title>
+    <style>
+      body { font-family: system-ui, sans-serif; max-width: 640px; margin: 48px auto; padding: 0 16px; color: #1f2937; }
+      textarea { width: 100%; font-family: monospace; }
+      .muted { color: #6b7280; }
+    </style>
+  </head>
+  <body>
+    <h1>Conectando o Mercado Livre à Fortis AI</h1>
+    <p id="status">Encaminhando a autorização para o painel no seu computador...</p>
+    <p class="muted">
+      Esta página não guarda nada: ela só repassa o código de autorização para
+      <code>http://localhost:3000</code>. O código sozinho não serve para nada sem a chave que fica no seu servidor.
+    </p>
+    <div id="fallback" hidden>
+      <p>Se o painel não abriu, copie o endereço abaixo e cole na tela <strong>Integrações</strong> do painel:</p>
+      <textarea id="address" rows="4" readonly></textarea>
+    </div>
+    <script>
+      // Altere se o painel rodar em outro endereço.
+      var PANEL_RETURN = "http://localhost:3000/integracoes/mercado-livre/retorno";
+      var query = window.location.search;
+      document.getElementById("address").value = window.location.href;
+      document.getElementById("fallback").hidden = false;
+      if (/[?&](code|error)=/.test(query)) {
+        window.location.replace(PANEL_RETURN + query);
+      } else {
+        document.getElementById("status").textContent =
+          "Nenhuma autorização recebida. Comece pelo botão 'Conectar Mercado Livre' na tela Integrações do painel.";
+      }
+    </script>
+  </body>
+</html>
